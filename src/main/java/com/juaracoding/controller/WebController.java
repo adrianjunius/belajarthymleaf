@@ -1,5 +1,6 @@
 package com.juaracoding.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,12 +9,14 @@ import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.juaracoding.model.ComfortModel;
 import com.juaracoding.model.ContentModel;
@@ -22,6 +25,7 @@ import com.juaracoding.model.TestiModel;
 import com.juaracoding.model.UserModel;
 import com.juaracoding.repository.ComfortRepository;
 import com.juaracoding.repository.UserRepository;
+import com.juaracoding.utility.FileUtility;
 
 @Controller
 public class WebController {
@@ -85,10 +89,26 @@ public class WebController {
 		return "inputcomfort";
 	}
 	@PostMapping("/services/inputcomfort")
-	private String saveComfort(@ModelAttribute ComfortModel data) {
+	private String saveComfort(@ModelAttribute ComfortModel data, @RequestParam(value="file")MultipartFile file)
+		throws IOException {
+		String fileName=StringUtils.cleanPath(file.getOriginalFilename());
+		String uploadDir = "comfort-images";
+		//data.setGambar("/"+uploadDir+"/"+fileName);
+		data.setGambar(fileName);
+		FileUtility.simpanFile(uploadDir, fileName, file);
 		comfortRepo.save(data);
 		return "redirect:/services";
 	}
+	//@PostMapping("/blog/input")
+//	private String saveBlog(@ModelAttribute UserModel data, @RequestParam(value="file")MultipartFile file)
+//	throws IOException{
+//		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//		String uploadDir = "user-images";
+//		data.setGambar(fileName);
+//		FileUtility.simpanFile(uploadDir, fileName, file);
+//		userRepo.save(data);
+//		return "redirect:/blog";
+	
 	@GetMapping("/blog")
 	private String blog(Model model, @RequestParam(value="huruf", defaultValue = "")String huruf, 
 		@RequestParam(value="tanggal", defaultValue = "")String tanggal){
@@ -134,7 +154,12 @@ public class WebController {
 	}
 	
 	@PostMapping("/blog/input")
-	private String saveBlog(@ModelAttribute UserModel data) {
+	private String saveBlog(@ModelAttribute UserModel data, @RequestParam(value="file")MultipartFile file)
+	throws IOException{
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		String uploadDir = "user-images";
+		data.setGambar(fileName);
+		FileUtility.simpanFile(uploadDir, fileName, file);
 		userRepo.save(data);
 		return "redirect:/blog";
 	}

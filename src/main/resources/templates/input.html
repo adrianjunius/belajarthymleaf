@@ -59,16 +59,17 @@
 						</nav>
 						<h1 class="text-center">News Input</h1>
 						<br>
-						<form method="POST" th:action="@{/blog/input}" th:object="${userModel}">
+						<form method="POST" th:action="@{/blog/input}" th:object="${userModel}" 
+							enctype="multipart/form-data">
 							<div class="mb-3">
 								<label for="exampleFormControlInput1" class="form-label">Nama</label>
 								<input type="text" class="form-control"
 									id="nama" th:field="*{nama}">
 							</div>
 							<div class="mb-3">
-								<label for="exampleFormControlInput1" class="form-label">Gambar</label>
-								<input type="text" class="form-control"
-									id="gambar" th:field="*{gambar}">
+								<label for="gambar" class="form-label">Gambar</label>
+								<input type="file" class="form-control"
+									id="gambar" th:name="file" accept="image/png, image/jpeg">
 							</div>
 							<div class="mb-3">
 								<label for="exampleFormControlInput1" class="form-label">Judul</label>

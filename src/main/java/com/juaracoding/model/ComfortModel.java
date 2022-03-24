@@ -20,4 +20,5 @@ public class ComfortModel {
 	@Column(length =20)
 	String title;
 	String deskripsi;
+	String gambar;
 }

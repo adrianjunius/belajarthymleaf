@@ -59,7 +59,8 @@
 						</nav>
 						<h1 class="text-center">News Input</h1>
 						<br>
-						<form method="POST" th:action="@{/services/inputcomfort}" th:object="${comfortModel}">
+						<form method="POST" th:action="@{/services/inputcomfort}" th:object="${comfortModel}"
+							enctype="multipart/form-data">
 							<div class="mb-3">
 								<label for="exampleFormControlInput1" class="form-label">Title</label>
 								<input type="text" class="form-control"
@@ -69,6 +70,11 @@
 								<label for="exampleFormControlInput1" class="form-label">deskripsi</label>
 								<input type="text" class="form-control"
 									id="deskripsi" th:field="*{deskripsi}">
+							</div>
+							<div class="mb-3">
+								<label for="gambar" class="form-label">Gambar</label>
+								<input type="file" class="form-control"
+									id="gambar" th:name="file" accept="image/png, image/jpeg">
 							</div>
 							
 							<button type="submit" class="btn btn-success">Insert</button>

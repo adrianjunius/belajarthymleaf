@@ -83,7 +83,7 @@
   
     <div class="page-section">
       <div class="container">
-      <a th:href="@{/blog/input/}">input data</a>
+      <a  class="btn btn-primary mb-3" th:href="@{/blog/input/}">input data</a>
       <!-- ini adalah form search -->
   <form class="row g-3" th:action="@{/blog}" method="GET">
   <div class="col-auto">
@@ -102,7 +102,7 @@
             <div class="card-blog">
               <div class="header">
                 <div class="avatar">
-                  <img th:src="@{${user.gambar}}" alt="">
+                  <img th:src="@{'/user-images/'+${user.gambar}}" alt="">
                 </div>
                 <div class="entry-footer">
                   <div th:text="${user.nama}" class="post-author">Sam Newman</div>
